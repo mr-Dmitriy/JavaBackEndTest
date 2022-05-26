@@ -63,9 +63,10 @@ public class ComplexSearchTest extends AbstractTest {
         response.getResults().toArray();
 
 
-        for (ComplexSearchResponse.Result tempValueFromResults : response.getResults()) {
-            for (ComplexSearchResponse.Nutrient tempValueFromNutrition : tempValueFromResults.nutrition.getNutrients()) {
-                assertThat(tempValueFromNutrition.getAmount(), lessThanOrEqualTo(100f));
+        for (ComplexSearchResponse.Result res : response.getResults()) {
+            for (ComplexSearchResponse.Nutrient nutr : res.nutrition.getNutrients()) {
+                if(nutr.getName().equalsIgnoreCase("calories" ))
+                assertThat(nutr.getAmount(), lessThanOrEqualTo(100f));
             }
         }
 
@@ -93,9 +94,10 @@ public class ComplexSearchTest extends AbstractTest {
 
 
         assertThat(response.getNumber(), equalTo(5));
+        for (ComplexSearchResponse.Result res : response.getResults()) {
+               assertThat( new ArrayList<>(res.getCuisines()), hasItem("European"));
+        }
 
-        response.getResults().forEach(recipes ->
-                assertThat(recipes.getCuisines() instanceof ArrayList, is(true)));
     }
 
         @Test
@@ -119,6 +121,7 @@ public class ComplexSearchTest extends AbstractTest {
 
             assertThat(response.getNumber(), equalTo(5));
             assertThat(response.getOffset(), equalTo(2));
+
 
     }
 
