@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class AddToShoppingListTest extends AbstractTest {
 
@@ -22,6 +25,7 @@ public class AddToShoppingListTest extends AbstractTest {
 
         AddToShoppingListResponse response = given()
 
+
                 .queryParam("hash", getApiHash())
                 .spec(requestSpecification)
                 .body(addToShoppingListRequest)
@@ -32,6 +36,10 @@ public class AddToShoppingListTest extends AbstractTest {
                 .extract()
                 .body()
                 .as(AddToShoppingListResponse.class);
+
+        System.out.println(response.getCost());
+        assertThat(response.getCost(), notNullValue());
+        assertThat(response.getCost().doubleValue(), greaterThan(0.00));
 
         tearDown(getUrl() + "/mealplanner/" + getUserName() + "/shopping-list/items/" + response.getId());
     }
