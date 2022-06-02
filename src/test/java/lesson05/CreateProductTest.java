@@ -38,7 +38,7 @@ public class CreateProductTest {
     @Test
     @Tag("Positive")
     @DisplayName("Product creation")
-    void createProductTest() throws IOException {
+    void createAndDeleteProductTest() throws IOException {
 
         setUp("bread", 9562, "Food");
         Response<Product> response = productService.createProduct(product).execute();

@@ -38,7 +38,7 @@ public class ModifyProductTest {
     @Test
     @Tag("Positive")
     @DisplayName("Change product (Positive)")
-    void modifyProductPositiveTest() throws IOException {
+    void modifyProductTest() throws IOException {
 
         Response<Product> response = productService.getProductById(id).execute();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
